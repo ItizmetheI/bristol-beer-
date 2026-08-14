@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bristol Beer Co. — Bristol, PA</title>
+<link rel="stylesheet" href="./style.css">
+<script>if(localStorage.getItem("bbc_age_verified")==="true")document.documentElement.classList.add("age-verified")</script>
+</head>
+<body>
+
+<div class="preloader" id="preloader">
+  <div class="preloader-mark">
+    <span class="nav-dot" style="width:14px;height:14px"><i></i><i class="ring"></i></span>
+    <span class="preloader-word">Bristol Beer Co.</span>
+  </div>
+</div>
+
+<div class="age-gate" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+  <div class="age-gate-card">
+    <span class="nav-dot" style="margin:0 auto 18px"><i></i><i class="ring"></i></span>
+    <h2 id="ageGateTitle" class="age-gate-title">Are you 21 or older?</h2>
+    <p class="age-gate-sub">You must be of legal drinking age to enter Bristol Beer Co.</p>
+    <div class="age-gate-actions">
+      <button class="btn-primary" id="ageGateYes">Yes, I'm 21+</button>
+      <a class="btn-glass" id="ageGateNo" href="https://www.responsibility.org/">No</a>
+    </div>
+  </div>
+</div>
+
+<a href="#" class="skip-link" id="skipLink">Skip to content</a>
+
+<div class="nav-fixed">
+  <nav class="nav-pill" id="nav" aria-label="Primary">
+    <div class="nav-progress" id="navProgress"></div>
+    <button class="nav-brand" id="navBrand" aria-label="Bristol Beer Co. home">
+      <span class="nav-dot"><i></i><i class="ring"></i></span>
+      <span class="wordmark">Bristol Beer Co.</span>
+    </button>
+    <div class="nav-links" id="navLinks">
+      <span class="nav-pill-active" id="navPillActive"></span>
+      <button class="nav-link" data-nav="browse" data-goto="browse">Browse</button>
+      <button class="nav-link" data-nav="slush" data-goto="slush">Slush</button>
+      <button class="nav-link" data-nav="rtd" data-goto="rtd">RTD</button>
+      <button class="nav-link" data-nav="about" data-goto="about">About</button>
+      <button class="nav-link" data-nav="visit" data-goto="visit">Visit</button>
+    </div>
+    <button class="nav-menu-btn" id="navMenuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navMenuPanel">
+      <span class="nav-menu-bars"><span></span><span></span><span></span></span>
+    </button>
+    <a href="tel:2674482337" class="btn-order" data-spot>Order</a>
+  </nav>
+  <div class="nav-menu-panel" id="navMenuPanel" hidden>
+    <button class="nav-menu-link" data-goto="browse">Browse</button>
+    <button class="nav-menu-link" data-goto="slush">Slush</button>
+    <button class="nav-menu-link" data-goto="rtd">RTD</button>
+    <button class="nav-menu-link" data-goto="about">About</button>
+    <button class="nav-menu-link" data-goto="visit">Visit</button>
+  </div>
+</div>
+
+<!-- ================= HOME ================= -->
+<main class="page active" data-page="home">
+
+  <section class="hero">
+    <div class="hero-bg" id="heroBg">
+      <video class="hero-bg-video" id="heroVideo" poster="images/hero-beer-poster.jpg" muted loop playsinline preload="auto">
+        <source src="video/hero-beer.mp4" type="video/mp4">
+      </video>
+      <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    </div>
+    <div class="hero-scrim"></div>
+    <div class="hero-noise"></div>
+
+    <div class="hero-content">
+      <div class="hero-content-inner">
+        <div class="badge">
+          <span class="badge-dot" id="openDot"></span><span id="openLine"></span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="hero-title-line"><span class="hero-title-inner">Cold cases,</span></span>
+          <span class="hero-title-line"><span class="hero-title-inner">deep shelves,</span></span>
+          <span class="hero-title-line"><span class="hero-title-inner">open till nine.</span></span>
+        </h1>
+
+        <div class="hero-foot">
+          <p class="hero-sub">A neighborhood beverage distributor on Route 13. Domestic cases, imports, craft, malt, and six slush machines running by the register.</p>
+          <div class="cta-row">
+            <button class="btn-primary" data-spot data-goto="browse">See what's in stock</button>
+            <a class="btn-secondary" data-spot href="https://maps.google.com/?q=2664+Bristol+Pike+Bristol+PA+19007">2664 Bristol Pike</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" id="scrollHint"><span></span></div>
+  </section>
+
+  <div class="stats-wrap">
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-value">4.7<span class="star">★</span></div><div class="stat-label">Google reviews</div></div>
+      <div class="stat"><div class="stat-value" id="todayHours"></div><div class="stat-label" id="todayName"></div></div>
+      <div class="stat"><div class="stat-value">Rt 13</div><div class="stat-label">By the Golden Eagle Diner</div></div>
+      <div class="stat"><div class="stat-value">Cases</div><div class="stat-label">Domestic · import · craft</div></div>
+    </div>
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-group"><span>Yuengling</span><span>·</span><span>Modelo</span><span>·</span><span>Victory</span><span>·</span><span>Guinness</span><span>·</span><span>Dogfish Head</span><span>·</span><span>Twisted Tea</span><span>·</span><span>High Noon</span><span>·</span><span>Surfside</span><span>·</span><span>Angry Orchard</span><span>·</span><span>Neshaminy Creek</span><span>·</span><span>Founders</span><span>·</span><span>Stella Artois</span><span>·</span></div>
+      <div class="ticker-group"><span>Yuengling</span><span>·</span><span>Modelo</span><span>·</span><span>Victory</span><span>·</span><span>Guinness</span><span>·</span><span>Dogfish Head</span><span>·</span><span>Twisted Tea</span><span>·</span><span>High Noon</span><span>·</span><span>Surfside</span><span>·</span><span>Angry Orchard</span><span>·</span><span>Neshaminy Creek</span><span>·</span><span>Founders</span><span>·</span><span>Stella Artois</span><span>·</span></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Cold box · front of store</div>
+        <h2 class="section-title">What's cold right now</h2>
+      </div>
+      <button class="link-more" data-goto="browse">Browse all 16 →</button>
+    </div>
+    <div class="card-grid">
+      <div class="card" data-reveal data-spot>
+        <img class="card-img" src="images/yuengling-traditional.jpg" alt="Yuengling Traditional" loading="lazy">
+        <div class="card-row"><div class="card-name">Yuengling Traditional</div><div class="card-size">24 pk</div></div>
+        <div class="card-meta">Domestic lager · 4.5%</div>
+      </div>
+      <div class="card" data-reveal data-spot>
+        <img class="card-img" src="images/modelo-especial.jpg" alt="Modelo Especial" loading="lazy">
+        <div class="card-row"><div class="card-name">Modelo Especial</div><div class="card-size">24 pk</div></div>
+        <div class="card-meta">Import lager · 4.4%</div>
+      </div>
+      <div class="card" data-reveal data-spot>
+        <img class="card-img" src="images/victory-hop-devil.jpg" alt="Victory Hop Devil" loading="lazy">
+        <div class="card-row"><div class="card-name">Victory Hop Devil</div><div class="card-size">12 pk</div></div>
+        <div class="card-meta">Craft IPA · 6.7%</div>
+      </div>
+      <div class="card" data-reveal data-spot>
+        <img class="card-img" src="images/rtd-high-noon.jpg" alt="High Noon Peach" loading="lazy">
+        <div class="card-row"><div class="card-name">High Noon Peach</div><div class="card-size">8 pk</div></div>
+        <div class="card-meta">Vodka seltzer · 4.5%</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Why Bristol Beer Co</div>
+        <h2 class="section-title">Built around the wall, not a website</h2>
+      </div>
+    </div>
+    <div class="feature-grid" data-reveal>
+      <div class="feature-tile">
+        <div class="feature-num">01</div>
+        <h3 class="feature-title">Deep shelves, fast turnover</h3>
+        <p class="feature-copy">If it's on the wall it's fresh. If it isn't, we can usually have it in by the end of the week.</p>
+      </div>
+      <div class="feature-tile">
+        <div class="feature-num">02</div>
+        <h3 class="feature-title">Domestic, import, craft &amp; malt</h3>
+        <p class="feature-copy">Cold boxes up front, cases stocked deep in back — everything from lagers to hard seltzers.</p>
+      </div>
+      <div class="feature-tile">
+        <div class="feature-num">03</div>
+        <h3 class="feature-title">Six slush machines</h3>
+        <p class="feature-copy">Cups or growlers, flavors that turn over with the season.</p>
+      </div>
+      <div class="feature-tile">
+        <div class="feature-num">04</div>
+        <h3 class="feature-title">Right on Route 13</h3>
+        <p class="feature-copy">By the Golden Eagle Diner. Parking out front, cases carried out.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="slush-grid" data-reveal>
+      <div class="slush-info">
+        <div class="kicker">Only at Bristol</div>
+        <h2 class="section-title">The slush wall</h2>
+        <p>Six machines, cups or growlers, flavors that turn over with the season. Peach mango goes first on Saturdays.</p>
+        <div class="slush-cta"><button class="btn-glass" data-goto="slush">All six flavors</button></div>
+      </div>
+      <div>
+        <div class="slush-row" data-spot><span class="slush-num">01</span><span class="slush-name">Red, White &amp; Berry</span><span class="slush-note">cherry · citrus · blue raspberry</span></div>
+        <div class="slush-row" data-spot><span class="slush-num">02</span><span class="slush-name">Peach Mango</span><span class="slush-note">sells out Saturdays</span></div>
+        <div class="slush-row" data-spot><span class="slush-num">03</span><span class="slush-name">Pineapple Coconut</span><span class="slush-note">heavy on the coconut</span></div>
+        <div class="slush-row" data-spot><span class="slush-num">04</span><span class="slush-name">Strawberry Lemon</span><span class="slush-note">tart, gone in five minutes</span></div>
+        <div class="slush-row" data-spot><span class="slush-num">05</span><span class="slush-name">Blue Raspberry</span><span class="slush-note">after-work favorite</span></div>
+        <img class="slush-media" src="images/slush-machine.jpg" alt="Slush machine dispensing a blue slush" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Explore</div>
+        <h2 class="section-title">Three ways to shop the wall</h2>
+      </div>
+    </div>
+    <div class="explore-grid" data-reveal>
+      <button class="explore-tile" data-goto="browse" data-spot>
+        <img src="images/victory-hop-devil.jpg" alt="" loading="lazy">
+        <div class="explore-tile-scrim"></div>
+        <div class="explore-tile-body"><div class="explore-tile-title">Browse everything</div><div class="explore-tile-sub">16 lines, filter by category</div></div>
+      </button>
+      <button class="explore-tile" data-goto="slush" data-spot>
+        <img src="images/slush-machine.jpg" alt="" loading="lazy">
+        <div class="explore-tile-scrim"></div>
+        <div class="explore-tile-body"><div class="explore-tile-title">The slush wall</div><div class="explore-tile-sub">Six flavors, only at Bristol</div></div>
+      </button>
+      <button class="explore-tile" data-goto="rtd" data-spot>
+        <img src="images/rtd-lone-river.jpg" alt="" loading="lazy">
+        <div class="explore-tile-scrim"></div>
+        <div class="explore-tile-body"><div class="explore-tile-title">Canned cocktails</div><div class="explore-tile-sub">Ready-to-drink, cold aisle</div></div>
+      </button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Word on the street</div>
+        <h2 class="section-title">What people are saying</h2>
+      </div>
+      <div class="review-scroll-controls">
+        <button class="scroll-arrow" id="reviewsPrev" aria-label="Previous reviews">‹</button>
+        <button class="scroll-arrow" id="reviewsNext" aria-label="Next reviews">›</button>
+      </div>
+    </div>
+    <div class="review-scroll" id="reviewsGrid"></div>
+  </section>
+
+  <section class="section">
+    <div class="visit-card" data-reveal>
+      <div class="visit-card-grid">
+        <div>
+          <div class="kicker">Come by</div>
+          <h2 class="section-title">2664 Bristol Pike</h2>
+          <p style="margin:14px 0 0;font-size:16px;line-height:1.6;color:rgba(238,241,245,.66);max-width:40ch">Bristol, PA 19007. On Route 13 by the Golden Eagle Diner. Parking out front, cases carried out.</p>
+          <div class="hours-table">
+            <div class="hours-row"><span>Mon – Sat</span><span>9AM – 9PM</span></div>
+            <div class="hours-row"><span>Sunday</span><span>9AM – 7PM</span></div>
+          </div>
+          <div class="cta-row" style="margin-top:24px">
+            <a class="btn-blue" data-spot href="tel:2674482337">(267) 448-2337</a>
+            <a class="btn-glass" data-spot href="https://maps.google.com/?q=2664+Bristol+Pike+Bristol+PA+19007">Directions</a>
+          </div>
+        </div>
+        <iframe class="media-box" style="border:0" title="Map to Bristol Beer Co., 2664 Bristol Pike, Bristol, PA 19007" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=2664+Bristol+Pike,+Bristol,+PA+19007&output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= BROWSE ================= -->
+<main class="page" data-page="browse" hidden>
+  <div class="page-inner">
+    <div class="kicker" id="countLine"></div>
+    <h1 class="page-title">Everything on the wall.</h1>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip active" data-filter="All">All</button>
+      <button class="filter-chip" data-filter="Domestic">Domestic</button>
+      <button class="filter-chip" data-filter="Import">Import</button>
+      <button class="filter-chip" data-filter="Craft">Craft</button>
+      <button class="filter-chip" data-filter="Malt &amp; seltzer">Malt &amp; seltzer</button>
+    </div>
+    <div class="card-grid" id="browseGrid" style="margin-top:30px"></div>
+    <p class="browse-note">Stock rotates weekly. Call for anything you don't see.</p>
+  </div>
+</main>
+
+<!-- ================= SLUSH ================= -->
+<main class="page" data-page="slush" hidden>
+  <div class="page-inner">
+    <div class="kicker" style="color:var(--orange)">Only at Bristol</div>
+    <h1 class="page-title" style="max-width:15ch">Frozen, spun, poured cold.</h1>
+    <div class="slush-page-grid" id="slushGrid"></div>
+  </div>
+</main>
+
+<!-- ================= RTD ================= -->
+<main class="page" data-page="rtd" hidden>
+  <div class="page-inner">
+    <div class="kicker">Cold aisle</div>
+    <h1 class="page-title" style="max-width:15ch">Canned cocktails, ready now.</h1>
+    <div class="card-grid" id="rtdGrid" style="margin-top:34px"></div>
+  </div>
+</main>
+
+<!-- ================= ABOUT ================= -->
+<main class="page" data-page="about" hidden>
+  <div class="page-inner-narrow">
+    <h1 class="page-title" style="max-width:18ch;font-size:clamp(34px,5.6vw,70px);line-height:.96;margin:0">A neighborhood distributor on Route 13.</h1>
+    <div class="about-grid">
+      <div class="about-copy">
+        <p>Bristol Beer Company is a traditional neighborhood beverage distributor along Bristol Pike in Bristol, Pennsylvania — the local stop for stocking up on domestic cases, imports, craft brews and malt beverages.</p>
+        <p>Shelves are deep and turnover is fast. If it's on the wall it's fresh, and if it isn't we can usually have it in by the end of the week.</p>
+        <p>Cold boxes up front, cases in back, slush machines by the register.</p>
+      </div>
+      <img class="about-media" src="images/store-interior.jpg" alt="Beverage store aisle stocked with cases" loading="lazy">
+    </div>
+    <div class="about-categories" id="aboutCategories"></div>
+  </div>
+</main>
+
+<!-- ================= VISIT ================= -->
+<main class="page" data-page="visit" hidden>
+  <div class="page-inner">
+    <h1 class="page-title" style="margin:0">Find us, call us.</h1>
+    <div class="visit-page-grid">
+      <div>
+        <div class="visit-page-table">
+          <div class="hours-row"><span>Mon – Sat</span><span>9AM – 9PM</span></div>
+          <div class="hours-row"><span>Sunday</span><span>9AM – 7PM</span></div>
+          <div class="hours-row"><span>Address</span><span>2664 Bristol Pike</span></div>
+          <div class="hours-row"><span>Phone</span><span>(267) 448-2337</span></div>
+        </div>
+        <div class="visit-page-actions">
+          <a class="btn-blue" data-spot href="tel:2674482337">Call the store</a>
+          <a class="btn-glass" data-spot href="https://maps.google.com/?q=2664+Bristol+Pike+Bristol+PA+19007">Open in Maps</a>
+        </div>
+      </div>
+      <iframe class="visit-page-map" style="border:0" title="Map to Bristol Beer Co., 2664 Bristol Pike, Bristol, PA 19007" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=2664+Bristol+Pike,+Bristol,+PA+19007&output=embed"></iframe>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-wordmark">Bristol Beer Co.</div>
+    <div class="footer-row">
+      <div class="footer-contact">2664 Bristol Pike, Bristol, PA 19007<br>(267) 448-2337</div>
+      <nav class="footer-nav">
+        <button data-goto="browse">Browse</button>
+        <button data-goto="slush">Slush</button>
+        <button data-goto="rtd">RTD</button>
+        <button data-goto="about">About</button>
+        <button data-goto="visit">Visit</button>
+      </nav>
+      <div class="footer-copy">© 2026 Bristol Beer Company. Must be 21+ to purchase. Please drink responsibly.<br><a href="./credits.html" style="color:inherit;text-decoration:underline">Photo &amp; video credits</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
