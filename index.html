@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bristol Beer Co. — Bristol, PA</title>
-<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./style.css?v=2">
 <script>if(localStorage.getItem("bbc_age_verified")==="true")document.documentElement.classList.add("age-verified")</script>
 </head>
 <body>
@@ -23,7 +23,7 @@
     <p class="age-gate-sub">You must be of legal drinking age to enter Bristol Beer Co.</p>
     <div class="age-gate-actions">
       <button class="btn-primary" id="ageGateYes">Yes, I'm 21+</button>
-      <a class="btn-glass" id="ageGateNo" href="https://www.responsibility.org/">No</a>
+      <a class="btn-glass-dark" id="ageGateNo" href="https://www.responsibility.org/">No</a>
     </div>
   </div>
 </div>
@@ -114,6 +114,20 @@
   </div>
 
   <section class="section">
+    <button class="video-showcase" id="videoShowcase" data-reveal aria-label="Play video">
+      <video id="showcaseVideo" src="video/hero-beer.mp4" poster="images/hero-beer-poster.jpg" muted loop playsinline preload="none"></video>
+      <div class="video-showcase-scrim"></div>
+      <div class="video-play-btn" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 5v14l12-7L7 5z" fill="currentColor"/></svg>
+      </div>
+      <div class="video-showcase-foot">
+        <span class="video-tag">See Us In Action</span>
+        <span class="video-tag">Bristol, PA</span>
+      </div>
+    </button>
+  </section>
+
+  <section class="section">
     <div class="section-head" data-reveal>
       <div>
         <div class="kicker">Cold box · front of store</div>
@@ -177,20 +191,39 @@
   </section>
 
   <section class="section">
-    <div class="slush-grid" data-reveal>
-      <div class="slush-info">
+    <div class="specialties-grid" data-reveal>
+      <div class="specialties-info">
         <div class="kicker">Only at Bristol</div>
         <h2 class="section-title">The slush wall</h2>
         <p>Six machines, cups or growlers, flavors that turn over with the season. Peach mango goes first on Saturdays.</p>
-        <div class="slush-cta"><button class="btn-glass" data-goto="slush">All six flavors</button></div>
+        <div class="accordion" id="specialtiesAccordion"></div>
+        <div class="specialties-cta"><button class="btn-glass" data-goto="slush">All six flavors</button></div>
       </div>
-      <div>
-        <div class="slush-row" data-spot><span class="slush-num">01</span><span class="slush-name">Red, White &amp; Berry</span><span class="slush-note">cherry · citrus · blue raspberry</span></div>
-        <div class="slush-row" data-spot><span class="slush-num">02</span><span class="slush-name">Peach Mango</span><span class="slush-note">sells out Saturdays</span></div>
-        <div class="slush-row" data-spot><span class="slush-num">03</span><span class="slush-name">Pineapple Coconut</span><span class="slush-note">heavy on the coconut</span></div>
-        <div class="slush-row" data-spot><span class="slush-num">04</span><span class="slush-name">Strawberry Lemon</span><span class="slush-note">tart, gone in five minutes</span></div>
-        <div class="slush-row" data-spot><span class="slush-num">05</span><span class="slush-name">Blue Raspberry</span><span class="slush-note">after-work favorite</span></div>
-        <img class="slush-media" src="images/slush-machine.jpg" alt="Slush machine dispensing a blue slush" loading="lazy">
+      <div class="featured-card" id="featuredCard">
+        <img id="featuredImg" src="images/slush-red-white-berry.jpg" alt="Red, White &amp; Berry slush">
+        <div class="featured-card-body">
+          <span class="featured-tag">Featured Slushy</span>
+          <div class="featured-name" id="featuredName">Red, White &amp; Berry</div>
+          <div class="featured-dots" id="featuredDots"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark">
+    <div class="section-inner">
+      <div class="rtd-spotlight" data-reveal>
+        <img class="rtd-spotlight-bg" src="images/rtd-cutwater.jpg" alt="" loading="lazy">
+        <div class="rtd-spotlight-scrim"></div>
+        <div class="rtd-spotlight-body">
+          <span class="rtd-spotlight-tag">Cold aisle</span>
+          <h2 class="rtd-spotlight-title">Elevate your <span class="accent">drink game</span></h2>
+          <p class="rtd-spotlight-copy">Canned cocktails and hard seltzers, ready to drink straight from the cooler. No mixing, no mess.</p>
+          <div class="rtd-spotlight-list">
+            <span>High Noon</span><span>Cutwater</span><span>Surfside</span><span>Lone River</span><span>Cayman Jack</span><span>Happy Dad</span>
+          </div>
+          <div class="rtd-spotlight-cta"><button class="btn-orange" data-goto="rtd">Shop ready-to-drink</button></div>
+        </div>
       </div>
     </div>
   </section>
@@ -227,12 +260,33 @@
         <div class="kicker">Word on the street</div>
         <h2 class="section-title">What people are saying</h2>
       </div>
-      <div class="review-scroll-controls">
-        <button class="scroll-arrow" id="reviewsPrev" aria-label="Previous reviews">‹</button>
-        <button class="scroll-arrow" id="reviewsNext" aria-label="Next reviews">›</button>
+    </div>
+    <div class="review-marquee" data-reveal>
+      <div class="review-marquee-track" id="reviewsTrack"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">On the wall</div>
+        <h2 class="section-title">Brands we carry</h2>
       </div>
     </div>
-    <div class="review-scroll" id="reviewsGrid"></div>
+    <div class="brands-grid" data-reveal>
+      <div class="brand-tile">Yuengling</div>
+      <div class="brand-tile">Modelo</div>
+      <div class="brand-tile">Victory</div>
+      <div class="brand-tile">Guinness</div>
+      <div class="brand-tile">Dogfish Head</div>
+      <div class="brand-tile">Twisted Tea</div>
+      <div class="brand-tile">High Noon</div>
+      <div class="brand-tile">Surfside</div>
+      <div class="brand-tile">Angry Orchard</div>
+      <div class="brand-tile">Neshaminy Creek</div>
+      <div class="brand-tile">Founders</div>
+      <div class="brand-tile">Stella Artois</div>
+    </div>
   </section>
 
   <section class="section">
@@ -241,13 +295,13 @@
         <div>
           <div class="kicker">Come by</div>
           <h2 class="section-title">2664 Bristol Pike</h2>
-          <p style="margin:14px 0 0;font-size:16px;line-height:1.6;color:rgba(238,241,245,.66);max-width:40ch">Bristol, PA 19007. On Route 13 by the Golden Eagle Diner. Parking out front, cases carried out.</p>
+          <p style="margin:14px 0 0;font-size:16px;line-height:1.6;color:var(--text-dark-muted);max-width:40ch">Bristol, PA 19007. On Route 13 by the Golden Eagle Diner. Parking out front, cases carried out.</p>
           <div class="hours-table">
             <div class="hours-row"><span>Mon – Sat</span><span>9AM – 9PM</span></div>
             <div class="hours-row"><span>Sunday</span><span>9AM – 7PM</span></div>
           </div>
           <div class="cta-row" style="margin-top:24px">
-            <a class="btn-blue" data-spot href="tel:2674482337">(267) 448-2337</a>
+            <a class="btn-orange" data-spot href="tel:2674482337">(267) 448-2337</a>
             <a class="btn-glass" data-spot href="https://maps.google.com/?q=2664+Bristol+Pike+Bristol+PA+19007">Directions</a>
           </div>
         </div>
@@ -322,7 +376,7 @@
           <div class="hours-row"><span>Phone</span><span>(267) 448-2337</span></div>
         </div>
         <div class="visit-page-actions">
-          <a class="btn-blue" data-spot href="tel:2674482337">Call the store</a>
+          <a class="btn-orange" data-spot href="tel:2674482337">Call the store</a>
           <a class="btn-glass" data-spot href="https://maps.google.com/?q=2664+Bristol+Pike+Bristol+PA+19007">Open in Maps</a>
         </div>
       </div>
@@ -348,6 +402,6 @@
   </div>
 </footer>
 
-<script src="./script.js"></script>
+<script src="./script.js?v=2"></script>
 </body>
 </html>
