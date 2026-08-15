@@ -158,26 +158,13 @@ function movePill() {
 }
 window.addEventListener("resize", movePill);
 
-// ---------- scroll: nav morph, progress bar, hero parallax, scroll hint ----------
+// ---------- scroll: nav shadow, progress bar, hero parallax, scroll hint ----------
 let navFloating = null;
-let navWidthAnimEnd = null;
 
-// Browsers can't tween `width` to/from `auto`, so a plain class-toggle
-// snaps the pill narrow instantly while padding/radius/transform still
-// animate — this measures both intrinsic widths and tweens real px values.
 function setNavFloating(shouldFloat) {
   if (shouldFloat === navFloating) return;
   navFloating = shouldFloat;
-  const startWidth = nav.getBoundingClientRect().width;
   nav.classList.toggle("is-floating", shouldFloat);
-  const endWidth = nav.getBoundingClientRect().width;
-  nav.style.width = startWidth + "px";
-  void nav.offsetWidth; // force reflow so the browser tweens from startWidth, not endWidth
-  if (navWidthAnimEnd) nav.removeEventListener("transitionend", navWidthAnimEnd);
-  requestAnimationFrame(() => { nav.style.width = endWidth + "px"; });
-  navWidthAnimEnd = (e) => { if (e.propertyName === "width") nav.style.width = ""; };
-  nav.addEventListener("transitionend", navWidthAnimEnd, { once: true });
-  requestAnimationFrame(movePill);
 }
 
 function onScroll() {
@@ -313,16 +300,43 @@ document.getElementById("slushGrid").innerHTML = slushes.map((s) =>
 // ---------- rtd page ----------
 document.getElementById("rtdGrid").innerHTML = rtds.map((r) => cardHTML(r.name, r.abv, r.kind, r.img)).join("");
 
-// ---------- reviews (home) ----------
-const reviewsGrid = document.getElementById("reviewsGrid");
-reviewsGrid.innerHTML = reviews.map((r) =>
-  '<div class="review-card" data-reveal data-spot><div class="review-stars">★★★★★</div><p class="review-quote">"' + r.quote + '"</p><div class="review-name">' + r.name + '</div></div>'
-).join("");
-reviewsGrid.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el)); // added after the initial observe() pass, so register these directly
+// ---------- home: specialties accordion + featured card ----------
+const accordionEl = document.getElementById("specialtiesAccordion");
+const featuredImg = document.getElementById("featuredImg");
+const featuredName = document.getElementById("featuredName");
+const featuredDots = document.getElementById("featuredDots");
+const homeSlushes = slushes.slice(0, 5);
 
-const reviewScrollStep = () => reviewsGrid.querySelector(".review-card").getBoundingClientRect().width + 14;
-document.getElementById("reviewsPrev").addEventListener("click", () => reviewsGrid.scrollBy({ left: -reviewScrollStep(), behavior: "smooth" }));
-document.getElementById("reviewsNext").addEventListener("click", () => reviewsGrid.scrollBy({ left: reviewScrollStep(), behavior: "smooth" }));
+accordionEl.innerHTML = homeSlushes.map((s, i) =>
+  '<div class="accordion-item' + (i === 0 ? " is-open" : "") + '" data-index="' + i + '"><button class="accordion-trigger"><span class="accordion-num">' + s.no + '</span><span class="accordion-name">' + s.name + '</span><span class="accordion-chevron">+</span></button><div class="accordion-panel"><p class="accordion-note">' + s.note + '</p></div></div>'
+).join("");
+featuredDots.innerHTML = homeSlushes.map((_, i) => '<span' + (i === 0 ? ' class="active"' : "") + '></span>').join("");
+
+const showSlush = (i) => {
+  const s = homeSlushes[i];
+  featuredImg.src = s.img;
+  featuredImg.alt = s.name + " slush";
+  featuredName.textContent = s.name;
+  accordionEl.querySelectorAll(".accordion-item").forEach((el, idx) => el.classList.toggle("is-open", idx === i));
+  featuredDots.querySelectorAll("span").forEach((el, idx) => el.classList.toggle("active", idx === i));
+};
+accordionEl.addEventListener("click", (e) => {
+  const item = e.target.closest(".accordion-item");
+  if (item) showSlush(Number(item.dataset.index));
+});
+
+// ---------- reviews (home marquee) ----------
+const reviewCardHTML = (r) =>
+  '<div class="review-card"><div class="review-quote-mark">"</div><div class="review-stars">★★★★★</div><p class="review-quote">' + r.quote + '</p><div class="review-footer"><div class="review-avatar">' + r.name.trim().charAt(0).toUpperCase() + '</div><div class="review-name-col"><div class="review-name">' + r.name + '</div><div class="review-source">Google review</div></div></div></div>';
+document.getElementById("reviewsTrack").innerHTML = reviews.map(reviewCardHTML).join("") + reviews.map(reviewCardHTML).join("");
+
+// ---------- video showcase ----------
+const videoShowcase = document.getElementById("videoShowcase");
+const showcaseVideo = document.getElementById("showcaseVideo");
+videoShowcase.addEventListener("click", () => {
+  videoShowcase.classList.add("is-playing");
+  showcaseVideo.play().catch(() => {});
+});
 
 // ---------- about page category breakdown ----------
 document.getElementById("aboutCategories").innerHTML = Object.keys(groups).map((name) => {
