@@ -2,6 +2,6 @@
   "name": "bristol-beer-co",
   "compatibility_date": "2026-08-15",
   "assets": {
-    "directory": "."
+    "directory": "out"
   }
 }
