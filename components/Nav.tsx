@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useOrder } from "@/lib/order-context";
@@ -39,9 +40,8 @@ export default function Nav() {
             floating ? "py-2.5 shadow-[0_8px_30px_-18px_rgba(0,0,0,.35)]" : "py-4"
           }`}
         >
-          <Link href="/" className="flex flex-none items-center gap-2.5">
-            <span className="relative block h-2.5 w-2.5 rounded-full bg-[var(--color-orange)]" />
-            <span className="whitespace-nowrap text-[15px] font-bold tracking-tight text-[var(--color-text)]">Bristol Beer Co.</span>
+          <Link href="/" className="flex flex-none items-center">
+            <Image src="/images/logo.png" alt="Bristol Beer Co." width={1200} height={584} priority className="h-8 w-auto" />
           </Link>
 
           <div className="ml-auto hidden items-center gap-1 text-[13.5px] sm:flex">

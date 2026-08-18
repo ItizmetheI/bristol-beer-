@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { categories, products } from "@/lib/data";
+import { SITE_NAME } from "@/lib/site";
+
+const title = `Shop the wall — ${SITE_NAME}`;
+const description = `${products.length} lines in stock across domestic, import, craft, and malt & seltzer. Bristol, PA.`;
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: { title, description, type: "website" },
+  twitter: { card: "summary", title, description },
+};
 
 export default function ShopIndexPage() {
   return (

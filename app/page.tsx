@@ -5,10 +5,12 @@ import Specialties from "@/components/Specialties";
 import RtdSpotlight from "@/components/RtdSpotlight";
 import CommunityBento from "@/components/CommunityBento";
 import VisitCard from "@/components/VisitCard";
+import StructuredData from "@/components/StructuredData";
 
 export default function HomePage() {
   return (
     <>
+      <StructuredData />
       <Hero />
       <Lineup />
       <ShowcaseBento />

@@ -1,12 +1,27 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { categories, products, type CategorySlug } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import AddToOrderButton from "@/components/AddToOrderButton";
+import { SITE_NAME } from "@/lib/site";
 
 export function generateStaticParams() {
   return categories.map((c) => ({ category: c.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const { category } = await params;
+  const meta = categories.find((c) => c.slug === category);
+  if (!meta) return {};
+  const title = `${meta.label} — ${SITE_NAME}`;
+  return {
+    title,
+    description: meta.blurb,
+    openGraph: { title, description: meta.blurb, type: "website" },
+    twitter: { card: "summary", title, description: meta.blurb },
+  };
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {

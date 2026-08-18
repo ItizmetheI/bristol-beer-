@@ -1,6 +1,18 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { rtds } from "@/lib/data";
 import AddToOrderButton from "@/components/AddToOrderButton";
+import { SITE_NAME } from "@/lib/site";
+
+const title = `Canned cocktails, ready now — ${SITE_NAME}`;
+const description = `${rtds.length} ready-to-drink canned cocktails and hard seltzers in the cold aisle. Bristol, PA.`;
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: { title, description, type: "website" },
+  twitter: { card: "summary", title, description },
+};
 
 export default function RtdPage() {
   return (
