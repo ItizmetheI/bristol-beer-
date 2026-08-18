@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { categories, products } from "@/lib/data";
+import { SITE_NAME } from "@/lib/site";
+
+const title = `About — ${SITE_NAME}`;
+const description = "A neighborhood distributor on Route 13. Deep shelves, fast turnover, domestic cases, imports, craft, and malt beverages.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: { title, description, type: "website" },
+  twitter: { card: "summary", title, description },
+};
 
 export default function AboutPage() {
   return (

@@ -34,6 +34,14 @@ const CREDITS: { file: string; title: string; url: string; creator: string; lice
   { file: "yuengling-traditional", title: "beertaccini's lablanche 2014 - IMG_0424", url: "https://www.flickr.com/photos/15216811@N06/14346781869", creator: "Nicola since 1972", license: "CC BY" },
 ];
 
+import type { Metadata } from "next";
+import { SITE_NAME } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: `Photo & video credits — ${SITE_NAME}`,
+  description: "Attribution for openly-licensed product and store photography used on this site.",
+};
+
 export default function CreditsPage() {
   return (
     <div className="mx-auto max-w-[900px] px-[clamp(20px,5vw,72px)] pb-25 pt-20">

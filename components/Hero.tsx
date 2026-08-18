@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import anime from "animejs";
 import { hoursToday, openState } from "@/lib/hours";
+import { prefersReducedMotion } from "@/lib/reduced-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,9 +38,8 @@ export default function Hero() {
 
   // anime.js: full entrance timeline (badge -> title -> subtext/CTA -> stats)
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const targets = ".hero-badge, .hero-line-inner, .hero-subfoot, .hero-stats-row";
-    if (reduce) {
+    if (prefersReducedMotion()) {
       document.querySelectorAll(targets).forEach((el) => {
         (el as HTMLElement).style.opacity = "1";
         (el as HTMLElement).style.filter = "none";
@@ -86,14 +86,26 @@ export default function Hero() {
         },
         "-=450"
       );
+
+    // Failsafe: if the tab is backgrounded/throttled mid-animation, anime.js's
+    // rAF-driven timeline can stall with elements stuck below opacity 1 —
+    // force the final state after the timeline's worst-case duration (~1.7s).
+    const failsafe = setTimeout(() => {
+      document.querySelectorAll(targets).forEach((el) => {
+        const style = (el as HTMLElement).style;
+        style.opacity = "1";
+        style.filter = "none";
+        style.transform = "none";
+      });
+    }, 2600);
+    return () => clearTimeout(failsafe);
   }, []);
 
   // GSAP ScrollTrigger: scroll-linked parallax on the hero background, no scroll listener
   useGSAP(
     () => {
       if (!bgRef.current || !heroRef.current) return;
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
+      if (prefersReducedMotion()) return;
       gsap.to(bgRef.current, {
         yPercent: 18,
         scale: 1.08,

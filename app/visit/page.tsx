@@ -1,3 +1,16 @@
+import type { Metadata } from "next";
+import { SITE_NAME } from "@/lib/site";
+
+const title = `Find us, call us — ${SITE_NAME}`;
+const description = "2664 Bristol Pike, Bristol, PA 19007. Mon–Sat 9AM–9PM, Sunday 9AM–7PM. (267) 448-2337.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: { title, description, type: "website" },
+  twitter: { card: "summary", title, description },
+};
+
 export default function VisitPage() {
   return (
     <div className="mx-auto max-w-[1120px] px-[clamp(20px,5vw,72px)] pb-30 pt-33">

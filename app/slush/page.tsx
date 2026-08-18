@@ -1,5 +1,17 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { slushes } from "@/lib/data";
+import { SITE_NAME } from "@/lib/site";
+
+const title = `The slush wall — ${SITE_NAME}`;
+const description = `Six machines, ${slushes.length} flavors, cups or growlers. Only at Bristol Beer Co.`;
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: { title, description, type: "website" },
+  twitter: { card: "summary", title, description },
+};
 
 export default function SlushPage() {
   return (

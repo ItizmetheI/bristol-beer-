@@ -1,30 +1,45 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePreloaderDone } from "@/lib/preloader-context";
 
 export default function AgeGate() {
+  const { preloaderDone } = usePreloaderDone();
   const [verified, setVerified] = useState<boolean | null>(null);
   const yesRef = useRef<HTMLButtonElement>(null);
   const noRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    setVerified(localStorage.getItem("bbc_age_verified") === "true");
+    try {
+      setVerified(localStorage.getItem("bbc_age_verified") === "true");
+    } catch {
+      setVerified(false);
+    }
   }, []);
 
+  // Don't mount the dialog (or its focus-trap/body-lock) until Preloader has
+  // finished — otherwise a keyboard/screen-reader user could tab into a dialog
+  // that's still visually covered by the pour animation.
+  const shouldShow = verified === false && preloaderDone;
+
   useEffect(() => {
-    if (verified === false) {
+    if (shouldShow) {
       document.body.style.overflow = "hidden";
       yesRef.current?.focus();
     }
     return () => {
       document.body.style.overflow = "";
     };
-  }, [verified]);
+  }, [shouldShow]);
 
-  if (verified !== false) return null;
+  if (!shouldShow) return null;
 
   function accept() {
-    localStorage.setItem("bbc_age_verified", "true");
+    try {
+      localStorage.setItem("bbc_age_verified", "true");
+    } catch {
+      // storage blocked (private browsing, etc.) — proceed anyway, just won't persist
+    }
     setVerified(true);
   }
 

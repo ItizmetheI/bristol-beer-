@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { prefersReducedMotion } from "@/lib/reduced-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,8 +25,7 @@ export default function Lineup() {
   useGSAP(
     () => {
       if (!wrapRef.current || !trackRef.current) return;
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
+      if (prefersReducedMotion()) return;
 
       const setPin = () => {
         const distance = trackRef.current!.scrollWidth - window.innerWidth;
